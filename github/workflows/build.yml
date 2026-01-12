@@ -1,0 +1,27 @@
+name: Build Windows App
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build exe
+        run: pyinstaller --onefile app.py
+
+      - name: Upload App
+        uses: actions/upload-artifact@v3
+        with:
+          name: ALGHAMRY-App
+          path: dist/*
